@@ -16,12 +16,19 @@ describe("Cryptowallet Contract", function () {
             to: contract.address,
             value: ethers.utils.parseEther('5', 'wei')
         };
-
-        const create_account = await contract.connect(owner).OpeningAccount(owner.address,"Subhajit Ghosh",{value:ethers.utils.parseEther('2','ether')});
+        
+        // 0.000000000000000001 = 1 wei
+        const create_account = await contract.connect(owner).OpeningAccount(owner.address,"Subhajit Ghosh",{value:ethers.utils.parseEther('0.000000000000000001','wei')});
         // console.log(create_account)
 
+        const deposite = await contract.DepositeAmount({value:ethers.utils.parseEther('0.000000000000000001','wei')});
         const get_account = await contract.GetAccount(owner.address);
-        console.log(get_account)
+        const debit_amount = await contract.DebitAmount({value:ethers.utils.parseEther('0.000000000000000001','wei')});
+        const get_contract_balance = await contract.GetContractBalance();
+        const myaccount_balance = await contract.AccountBalance();
+        // console.log(debit_amount)
+        console.log(myaccount_balance)
+        // console.log(get_contract_balance)
         
         // await owner.sendTransaction(tx);
 
