@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\Personal Project\\Crypto Wallet\\contracts\\CryptoWallet.sol": {
-      "lastModificationDate": 1674334232888,
-      "contentHash": "40d95dd89871a80421ee1ac6b5ed84d7",
+      "lastModificationDate": 1674417166694,
+      "contentHash": "01315480395daa56356335b4a20b9d88",
       "sourceName": "contracts/CryptoWallet.sol",
       "solcConfig": {
         "version": "0.8.17",
@@ -75,8 +75,8 @@
       ]
     },
     "D:\\Personal Project\\Crypto Wallet\\contracts\\Modifiers.sol": {
-      "lastModificationDate": 1674334083765,
-      "contentHash": "7ecf8387a2fb5a8e78338852d0630e08",
+      "lastModificationDate": 1674416933084,
+      "contentHash": "c15fea489aea9d3c91c9935ac4ff75c2",
       "sourceName": "contracts/Modifiers.sol",
       "solcConfig": {
         "version": "0.8.17",

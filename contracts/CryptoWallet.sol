@@ -8,6 +8,13 @@ import {User} from './User.sol';
 import {WalletModifiers} from './Modifiers.sol';
 
 contract CryptoWallet is User,WalletModifiers{
+
+    address public owner;
+
+    constructor(){
+        owner = msg.sender;
+    }
+
     // 0.000000000000000001 = 1 wei
     receive() payable external{}
     event AlertMsg(address useraddress,string message);
@@ -30,6 +37,9 @@ contract CryptoWallet is User,WalletModifiers{
         emit AlertMsg(user,"Acount Has Been Created Successfully...");
     }
 
+    /**
+     * Withdrwa from my Cryto Wallet to my origin Metamask wallet
+    */
     function DepositeAmount() public payable DepositeValue{
         address isuser;
         payable(address(this)).transfer(msg.value);
@@ -47,18 +57,19 @@ contract CryptoWallet is User,WalletModifiers{
     }
 
 
-    function GetAccount(address user) public view returns(UserDeatails memory ud){
+    function GetAccount(address user) public view returns(UserDeatails memory acc){
         require(Customer[user].useraddress == user);
-        ud = Customer[user];
-        return ud;
+        acc = Customer[user];
+        return acc;
     }
 
     function GetContractBalance() public view returns(uint){
+
         return address(this).balance;
     }
 
 
-    function DebitAmount() public payable {
+    function WithDraw(uint amount) public payable {
         address isuser;
         for(uint i = 0; i <= userarray.length-1; i++){
             if(userarray[i] == msg.sender){
@@ -67,12 +78,24 @@ contract CryptoWallet is User,WalletModifiers{
             }
         }
         
-        require(msg.value <= Customer[isuser].saving_amount);
+        require(amount <= Customer[isuser].saving_amount);
 
-        payable(isuser).transfer(msg.value);
+        Customer[isuser].saving_amount = Customer[isuser].saving_amount - amount;
+
+        require(amount <= address(this).balance);
+
+        uint balance_left = address(this).balance - amount;
+
+        payable(address(this)).transfer(balance_left);
+        emit AlertMsg(address(this),"Amount has been deducted from the Contract...");
+
+        payable(address(isuser)).transfer(address(this).balance - balance_left);
+        emit AlertMsg(isuser,"Amount has succesfully been withdrawl to your account...");
     }
+    
 
     function AccountBalance() public view returns(uint){ 
+
         return msg.sender.balance;
     }
 

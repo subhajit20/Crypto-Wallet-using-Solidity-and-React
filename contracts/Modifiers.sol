@@ -12,12 +12,12 @@ contract WalletModifiers is User{
         _;
     }
    modifier MinumumValue{
-      require(msg.value == 1 wei);
+      require(msg.value == 10 wei);
       _;
    }
 
    modifier DepositeValue{
-      require(msg.value >= 1 wei);
+      require(msg.value >= 10 wei);
       _;
    }
 
