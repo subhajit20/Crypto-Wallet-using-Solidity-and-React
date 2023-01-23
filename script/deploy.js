@@ -6,7 +6,7 @@ async function main() {
 
   const Test = await hre.ethers.getContractFactory("CryptoWallet");
 
-  const contract1 = await Test.deploy();
+  const contract1 = await Test.connect(owner).deploy();
 
   console.log(`deployed ${contract1.address}`);
 }

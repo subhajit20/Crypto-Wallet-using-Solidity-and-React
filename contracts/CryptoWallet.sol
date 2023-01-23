@@ -27,6 +27,7 @@ contract CryptoWallet is User,WalletModifiers{
      */
     function OpeningAccount(address user,string memory name_) public payable  AccountExist MinumumValue{
         payable(address(this)).transfer(msg.value);
+        emit AlertMsg(address(this),"Your amount has been debited to the bank account");
         uint balance = msg.value;
         Customer[user] = UserDeatails({
             name:name_,
