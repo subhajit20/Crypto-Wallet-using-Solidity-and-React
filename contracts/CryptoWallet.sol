@@ -17,7 +17,7 @@ contract CryptoWallet is User,WalletModifiers{
 
     // 0.000000000000000001 = 1 wei
     receive() payable external{}
-    event AlertMsg(address useraddress,string message);
+    event AlertMsg(address useraddress,bool flag,string message);
 
     /**
      * Function OpeningAccount
@@ -27,7 +27,7 @@ contract CryptoWallet is User,WalletModifiers{
      */
     function OpeningAccount(address user,string memory name_) public payable  AccountExist MinumumValue{
         payable(address(this)).transfer(msg.value);
-        emit AlertMsg(address(this),"Your amount has been debited to the bank account");
+        emit AlertMsg(address(this),true,"Your amount has been debited to the bank account");
         uint balance = msg.value;
         Customer[user] = UserDeatails({
             name:name_,
@@ -35,7 +35,19 @@ contract CryptoWallet is User,WalletModifiers{
             saving_amount:Customer[user].saving_amount + balance
         });
         userarray.push(user);
-        emit AlertMsg(user,"Acount Has Been Created Successfully...");
+        emit AlertMsg(user,true,"Acount Has Been Created Successfully...");
+    }
+    
+    /**
+     * Customer Visit their account
+     */
+    function VisitAccount(address user) public returns(UserDeatails memory myaccount){
+        require(Customer[user].useraddress == user);
+
+        myaccount = Customer[user];
+        emit AlertMsg(user,true,"Acount Has Been found Successfully...");
+
+        return myaccount;
     }
 
     /**
@@ -54,7 +66,7 @@ contract CryptoWallet is User,WalletModifiers{
         }
 
         Customer[isuser].saving_amount = Customer[isuser].saving_amount + balance;
-        emit AlertMsg(isuser,"Amout has been credited successfully...");
+        emit AlertMsg(isuser,true,"Amout has been credited successfully...");
     }
 
 
@@ -88,10 +100,10 @@ contract CryptoWallet is User,WalletModifiers{
         uint balance_left = address(this).balance - amount;
 
         payable(address(this)).transfer(balance_left);
-        emit AlertMsg(address(this),"Amount has been deducted from the Contract...");
+        emit AlertMsg(address(this),true,"Amount has been deducted from the Contract...");
 
         payable(address(isuser)).transfer(address(this).balance - balance_left);
-        emit AlertMsg(isuser,"Amount has succesfully been withdrawl to your account...");
+        emit AlertMsg(isuser,true,"Amount has succesfully been withdrawl to your account...");
     }
     
 

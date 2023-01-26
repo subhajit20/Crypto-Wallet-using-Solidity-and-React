@@ -7,10 +7,17 @@ import {User} from './User.sol';
 
 
 contract WalletModifiers is User{
+
     modifier AccountExist{
         require(Customer[msg.sender].useraddress != msg.sender);
         _;
     }
+
+    modifier isValidAccount{
+        require(Customer[msg.sender].useraddress == msg.sender);
+        _;
+    }
+
    modifier MinumumValue{
       require(msg.value == 10 wei);
       _;
